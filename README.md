@@ -149,6 +149,38 @@ After executing this, you should have successfully created a Lambda Function wit
 
 **Adding the Cloudwatch Trigger**
 
-The final step of the way is to add a Cloudwatch Trigger to the newly created Lambda Function that invokes it upon encountering an error.
+The final step of the way is to add a Cloudwatch Trigger that invokes the error reporter upon encountering an error.
 
-Unfortunately, AWS CLI doesn't have support to do this step from a CLI. So, you'll have to login to AWS and navigate to the function just created.
+We can do this by adding a Subscription Filter to the Lambda Function and passing a Filter Pattern that it can subscribe to.
+
+But first, we need to give the log group, that we want to monitor, the ability to invoke the error reporter lambda function. 
+
+CLI command to add the necessary permissions:
+```
+aws lambda add-permission --function-name "Error-Reporter" --statement-id "Error-Reporter" --principal "logs.us-east-1.amazonaws.com" --action "lambda:InvokeFunction" --source-arn "arn:aws:logs:us-east-1:213912083787:log-group:/aws/lambda/Error-Reporter" --source-account "213912083787"
+```
+
+Once these permissions are added, we can go ahead and put the subscription filter on the Lambda.
+
+CLI command to add the Subscription Filter:
+```
+aws logs put-subscription-filter --cli-input-json file://subscription-filter.json
+```
+
+Check out the `subscription-filter.json` file above to find out information about parameters to this command.
+- `logGroupName` is the Log Group that you want to monitor for error. (Each Lambda has its own log group)
+- `filterName` is the name of the Subscription Filter.
+- `filterPattern` is the actual pattern that the subscriber looks out for in the logs. It can be any of the common errors that are emitted like ERROR, CRITICAL etc. or a custom error.
+- `destinationArn` is the ARN of the service that is triggered upon encountering the Filter Pattern i.e.; the above created lambda function in our case. 
+
+You can refer the [official Subscription Filter docs](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/SubscriptionFilters.html) for further details.
+
+You can subscribe as many log groups to this error reporter as you like. However, a maximum of two subscription filters can be added on a single log group.
+
+## Final Results
+
+After this whole process, whenever any of the monitored lambda encounters an error, you will get an Email Notification containing the Log Group that is reporting the Error as well as the Error Message itself.
+
+<img width="1028" alt="Screen Shot 2022-01-05 at 5 23 12 PM" src="https://user-images.githubusercontent.com/53145353/148217113-af84a0aa-8932-4f2b-b7d1-742bef5c3429.png">
+
+<br />Thank You for following along!
