@@ -1,0 +1,6 @@
+{
+    "Variables": {
+      "snsARN": "arn:aws:sns:us-east-1:213912083787:Lambda-Error-Reporter"
+    }
+  }
+  
