@@ -1,0 +1,12 @@
+{
+    "Name": "Lambda-Error-Reporter",
+    "Attributes": {
+        "DisplayName": "Lambda Error Reporter - Caremerge"
+    },
+    "Tags": [
+        {
+            "Key": "App",
+            "Value": "Lambda Error Reporter"
+        }
+    ]
+}
