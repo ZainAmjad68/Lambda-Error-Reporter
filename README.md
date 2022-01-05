@@ -76,7 +76,6 @@ CLI command to create a Policy:
 ```
 aws iam create-policy --policy-name error-report-policy --policy-document file://policy.json
 ```
-
 Copy the `Policy ARN` that is returned upon executing this command. It will be used in the next step.
 
 Check out the `policy.json` file above to find out information about the policy statement that we're creating.
@@ -114,6 +113,7 @@ CLI command to create a Role:
 ```
 aws iam create-role --role-name error-report-role --assume-role-policy-document file://trust-policy.json
 ```
+Copy the `Role ARN` that is returned upon executing this command. It will be used in the next step.
 
 Check out the `trust-policy.json` file above to find out information about the policy statement that we're creating. It basically allows a Lambda (and no one else) to assume this role.
 
@@ -129,4 +129,26 @@ You can refer to the [official docs](https://docs.aws.amazon.com/cli/latest/refe
 
 **Creating the Lambda Function**
 
+There are some things we need to do before we can create the Lambda Function. First of all, take a look at the pre-configured code for the function in the file `index.js`. It works well to send out an Email regarding the Error. If you want to modify it to suit your use case, you can do so.
+<br />Read up on [this](https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/sns-examples.html) official guide for some other ways to publish to an SNS.
+
+If you do end up making some changes to the code, use the command `zip -r9 lambda.zip index.js` to compress it into a zip archive again.
+
+Current code uses an Environment Variable to fetch the `Topic ARN` that it publishes to. So, in the `environment.json` file, change the `snsARN` to your SNS Topic ARN.
+
+Also, make sure that you have the `Role ARN` from the previous step in hand, it will be used in the command.
+
+Now, you're ready to create the Lambda.
+
+CLI command to create a Lambda Function:
+```
+aws lambda create-function --function-name Error-Reporter --runtime nodejs14.x --zip-file fileb://lambda.zip --handler index.handler --environment file://environment.json --role "arn:aws:iam::213912083787:role/error-report-role"
+```
+
+After executing this, you should have successfully created a Lambda Function with all the required Code and Config to work out of the Box.
+
 **Adding the Cloudwatch Trigger**
+
+The final step of the way is to add a Cloudwatch Trigger to the newly created Lambda Function that invokes it upon encountering an error.
+
+Unfortunately, AWS CLI doesn't have support to do this step from a CLI. So, you'll have to login to AWS and navigate to the function just created.
