@@ -4,7 +4,7 @@
         {
             "Effect": "Allow",
             "Action": "sns:Publish",
-            "Resource": "arn:aws:sns:us-east-1:213912083787:Lambda-Error-Reporter"
+            "Resource": "arn:aws:sns:us-east-1:***********:Lambda-Error-Reporter"
         },
         {
             "Effect": "Allow",
@@ -13,7 +13,7 @@
                 "logs:CreateLogStream",
                 "logs:PutLogEvents"
             ],
-            "Resource": "arn:aws:logs:us-east-1:213912083787:log-group:/aws/lambda/Error-Reporter:*"
+            "Resource": "arn:aws:logs:us-east-1:*************:log-group:/aws/lambda/Error-Reporter:*"
         }
     ]
 }
