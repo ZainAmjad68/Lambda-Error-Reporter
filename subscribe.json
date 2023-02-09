@@ -1,5 +1,5 @@
 {
-    "TopicArn": "arn:aws:sns:us-east-1:213912083787:Lambda-Error-Reporter",
+    "TopicArn": "arn:aws:sns:us-east-1:**********:Lambda-Error-Reporter",
     "Protocol": "email",
     "Endpoint": "zain.amjad@caremerge.com",
     "ReturnSubscriptionArn": true
