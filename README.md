@@ -67,7 +67,7 @@ You can refer to the [official docs](https://docs.aws.amazon.com/cli/latest/refe
 
 By now, you will have received an Email (or an SMS, depending on subscription type) on the Endpoint that you specified in the previous step to confirm this subscription.
 And it will probably look something like this:
-<img width="765" alt="Screen Shot 2022-01-05 at 1 51 58 PM" src="https://user-images.githubusercontent.com/53145353/148188798-4a23f000-39f2-4038-85ce-d48383d5dd9f.png">
+![blurred](https://user-images.githubusercontent.com/53145353/217818996-1c8b3e12-4582-46e4-b155-b2576f425115.png)
 <br />Confirm the subscription before moving on to the next step.
 
 **Creating a Policy**
@@ -181,6 +181,6 @@ You can subscribe as many log groups to this error reporter as you like. However
 
 After this whole process, whenever any of the monitored lambda encounters an error, you will get an Email Notification containing the Log Group that is reporting the Error as well as the Error Message itself.
 
-<img width="1028" alt="Screen Shot 2022-01-05 at 5 23 12 PM" src="https://user-images.githubusercontent.com/53145353/148217113-af84a0aa-8932-4f2b-b7d1-742bef5c3429.png">
+![blurred result](https://user-images.githubusercontent.com/53145353/217819110-4ec0e523-4827-44ea-a12d-b8f5b5b79cd7.png)
 
 <br />Thank You for following along!
